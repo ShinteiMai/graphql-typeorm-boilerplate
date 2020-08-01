@@ -45,8 +45,7 @@ export const resolvers: ResolverMap = {
       });
       await user.save();
 
-      const link = await createConfirmationLink(url, user.id, redis);
-      console.log(link);
+      await createConfirmationLink(url, user.id, redis);
 
       return null;
     },
