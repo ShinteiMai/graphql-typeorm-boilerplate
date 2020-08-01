@@ -1,9 +1,15 @@
 import { request } from "graphql-request";
+import { AddressInfo } from "net";
+
 import { User } from "./entity/User";
-import { initializeTypeorm } from "./utils/initializeTypeorm";
+import { server } from "./initializeServer";
+
+let getHost = () => ``;
 
 beforeAll(async () => {
-  await initializeTypeorm();
+  const app = await server();
+  const { port } = app.address() as AddressInfo;
+  getHost = () => `http://127.0.0.1:${port}`;
 });
 
 const user = {
@@ -18,7 +24,7 @@ const mutation = `
 `;
 
 test("register a user", async () => {
-  const response = await request("http://localhost:4000", mutation);
+  const response = await request(getHost(), mutation);
   expect(response).toEqual({ register: true });
 
   const users = await User.find({ where: { email: user.email } });
