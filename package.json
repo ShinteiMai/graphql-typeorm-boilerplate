@@ -6,6 +6,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^26.0.8",
     "@types/node": "^14.0.27",
+    "@types/yup": "^0.29.3",
     "jest": "^26.2.2",
     "nodemon": "^2.0.4",
     "ts-jest": "^26.1.4",
@@ -23,7 +24,8 @@
     "graphql-yoga": "^1.9.2",
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "0.2.25"
+    "typeorm": "0.2.25",
+    "yup": "^0.29.2"
   },
   "scripts": {
     "start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
