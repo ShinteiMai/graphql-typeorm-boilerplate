@@ -24,8 +24,9 @@
     "typeorm": "0.2.25"
   },
   "scripts": {
-    "start": "nodemon --exec ts-node src/index.ts",
-    "test": "jest"
+    "start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
+    "test-server": "NODE_ENV=testing ts-node src/index.ts",
+    "test": "NODE_ENV=testing jest"
   },
   "jest": {
     "transform": {
