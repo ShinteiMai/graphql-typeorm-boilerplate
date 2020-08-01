@@ -9,13 +9,27 @@ export const resolvers: ResolverMap = {
   },
   Mutation: {
     register: async (_, { email, password }) => {
+      const existingUser = await User.findOne({
+        where: { email },
+        select: ["id"],
+      });
+      if (existingUser) {
+          return [
+              {
+                  path: "email",
+                  message: "email already taken"
+              }
+          ]
+      }
+
       const hashedPassword = await bcrypt.hash(password, 12);
       const user = await User.create({
         email,
         password: hashedPassword,
       });
       await user.save();
-      return true;
+
+      return null;
     },
   },
 };
