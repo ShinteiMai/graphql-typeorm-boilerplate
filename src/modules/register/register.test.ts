@@ -33,7 +33,6 @@ const mutation = (e: string, p: string) => `
 
 describe("Register a user", async () => {
   it("capables of registering a user", async () => {
-    // * Make sure that we can register a user
     const response = await request(
       getHost(),
       mutation(user.email, user.password)
@@ -48,7 +47,6 @@ describe("Register a user", async () => {
     expect(registeredUser.password).not.toEqual(user.password);
   });
   it("capables for checking duplicate emails", async () => {
-    // * Test for duplicate emails
     const response: any = await request(
       getHost(),
       mutation(user.email, user.password)
@@ -61,7 +59,6 @@ describe("Register a user", async () => {
   });
 
   it("capables of checking invalid emails", async () => {
-    // * Catch bad emails
     const response: any = await request(
       getHost(),
       mutation("b", user.password)
@@ -82,7 +79,6 @@ describe("Register a user", async () => {
   });
 
   it("capables of checking invalid passwords", async () => {
-    // * Catch bad password
     const response: any = await request(getHost(), mutation(user.email, "as"));
     expect(response.register).toHaveLength(1);
     expect(response).toEqual({

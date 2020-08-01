@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { ResolverMap } from "../../types/graphql-utils";
 import { User } from "../../entity/User";
 import { formattedError } from "../../utils/formattedError";
+import { createConfirmationLink } from "../../utils/createConfirmationLink";
 
 const schema = yup.object().shape({
   email: yup.string().min(3).max(255).email(),
@@ -15,7 +16,7 @@ export const resolvers: ResolverMap = {
     default: () => "Default query for GraphQL",
   },
   Mutation: {
-    register: async (_, args) => {
+    register: async (_, args, { redis, url }) => {
       try {
         await schema.validate(args, { abortEarly: false });
       } catch (err) {
@@ -43,6 +44,9 @@ export const resolvers: ResolverMap = {
         password: hashedPassword,
       });
       await user.save();
+
+      const link = await createConfirmationLink(url, user.id, redis);
+      console.log(link);
 
       return null;
     },
