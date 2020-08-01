@@ -31,76 +31,88 @@ const mutation = (e: string, p: string) => `
     }
 `;
 
-test("register a user", async () => {
-  // * Make sure that we can register a user
-  const response = await request(
-    getHost(),
-    mutation(user.email, user.password)
-  );
-  expect(response).toEqual({ register: null });
+describe("Register a user", async () => {
+  it("capables of registering a user", async () => {
+    // * Make sure that we can register a user
+    const response = await request(
+      getHost(),
+      mutation(user.email, user.password)
+    );
+    expect(response).toEqual({ register: null });
 
-  const users = await User.find({ where: { email: user.email } });
-  expect(users).toHaveLength(1);
+    const users = await User.find({ where: { email: user.email } });
+    expect(users).toHaveLength(1);
 
-  const registeredUser = users[0];
-  expect(registeredUser.email).toEqual(user.email);
-  expect(registeredUser.password).not.toEqual(user.password);
-
-  // * Test for duplicate emails
-  const response2: any = await request(
-    getHost(),
-    mutation(user.email, user.password)
-  );
-  expect(response2.register).toHaveLength(1);
-  expect(response2.register[0]).toEqual({
-    path: "email",
-    message: duplicateEmail,
+    const registeredUser = users[0];
+    expect(registeredUser.email).toEqual(user.email);
+    expect(registeredUser.password).not.toEqual(user.password);
+  });
+  it("capables for checking duplicate emails", async () => {
+    // * Test for duplicate emails
+    const response: any = await request(
+      getHost(),
+      mutation(user.email, user.password)
+    );
+    expect(response.register).toHaveLength(1);
+    expect(response.register[0]).toEqual({
+      path: "email",
+      message: duplicateEmail,
+    });
   });
 
-  // * Catch bad emails
-  const response3: any = await request(getHost(), mutation("b", user.password));
-  expect(response3.register).toHaveLength(2);
-  expect(response3).toEqual({
-    register: [
-      {
-        path: "email",
-        message: minEmailLength,
-      },
-      {
-        path: "email",
-        message: invalidEmail,
-      },
-    ],
+  it("capables of checking invalid emails", async () => {
+    // * Catch bad emails
+    const response: any = await request(
+      getHost(),
+      mutation("b", user.password)
+    );
+    expect(response.register).toHaveLength(2);
+    expect(response).toEqual({
+      register: [
+        {
+          path: "email",
+          message: minEmailLength,
+        },
+        {
+          path: "email",
+          message: invalidEmail,
+        },
+      ],
+    });
   });
 
-  // * Catch bad password
-  const response4: any = await request(getHost(), mutation(user.email, "as"));
-  expect(response4.register).toHaveLength(1);
-  expect(response4).toEqual({
-    register: [
-      {
-        path: "password",
-        message: minPasswordLength,
-      },
-    ],
+  it("capables of checking invalid passwords", async () => {
+    // * Catch bad password
+    const response: any = await request(getHost(), mutation(user.email, "as"));
+    expect(response.register).toHaveLength(1);
+    expect(response).toEqual({
+      register: [
+        {
+          path: "password",
+          message: minPasswordLength,
+        },
+      ],
+    });
   });
 
-  const response5: any = await request(getHost(), mutation("as", "as"));
-  expect(response5.register).toHaveLength(3);
-  expect(response5).toEqual({
-    register: [
-      {
-        path: "email",
-        message: minEmailLength,
-      },
-      {
-        path: "email",
-        message: invalidEmail,
-      },
-      {
-        path: "password",
-        message: minPasswordLength,
-      },
-    ],
+  it("capables of checking both invalid emails and passwords", async () => {
+    const response: any = await request(getHost(), mutation("as", "as"));
+    expect(response.register).toHaveLength(3);
+    expect(response).toEqual({
+      register: [
+        {
+          path: "email",
+          message: minEmailLength,
+        },
+        {
+          path: "email",
+          message: invalidEmail,
+        },
+        {
+          path: "password",
+          message: minPasswordLength,
+        },
+      ],
+    });
   });
 });
