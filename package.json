@@ -7,6 +7,7 @@
     "@types/ioredis": "^4.17.3",
     "@types/jest": "^26.0.8",
     "@types/node": "^14.0.27",
+    "@types/node-fetch": "^2.5.7",
     "@types/uuid": "^8.0.0",
     "@types/yup": "^0.29.3",
     "jest": "^26.2.2",
@@ -25,6 +26,7 @@
     "graphql-tools": "^6.0.15",
     "graphql-yoga": "^1.18.3",
     "ioredis": "^4.17.3",
+    "node-fetch": "^2.6.0",
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "0.2.25",
@@ -33,7 +35,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=development nodemon --exec ts-node src/index.ts",
-    "test": "NODE_ENV=testing jest --forceExit"
+    "test": "NODE_ENV=testing jest --forceExit --detectOpenHandles"
   },
   "jest": {
     "globalSetup": "./src/tests/initSetup.js",

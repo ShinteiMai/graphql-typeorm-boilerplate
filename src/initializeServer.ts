@@ -23,9 +23,7 @@ export const server = async () => {
     schemas.push(makeExecutableSchema({ resolvers, typeDefs }));
   });
 
-
   const redis = new Redis();
-
 
   const stitchedSchemas: any = mergeSchemas({ schemas });
   const instance = new GraphQLServer({
@@ -35,19 +33,18 @@ export const server = async () => {
     },
   });
 
-
   instance.express.get("/confirm/:id", async (req, res) => {
     const { id } = req.params;
     const userId = await redis.get(id);
 
     if (userId) {
-      User.update({ id: userId }, { confirmed: true });
+      await User.update({ id: userId }, { confirmed: true });
+      await redis.del(id);
       res.send("ok");
     } else {
       res.send("invalid user");
     }
   });
-
 
   await initializeTypeorm();
   const port = process.env.NODE_ENV === "testing" ? 0 : 4000;
