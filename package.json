@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
     "graphql": "^15.3.0",
     "graphql-import": "^1.0.2",
     "graphql-request": "^1.5.2",
