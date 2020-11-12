@@ -27,7 +27,7 @@
     "graphql-tools": "^6.0.15",
     "graphql-yoga": "^1.18.3",
     "ioredis": "^4.17.3",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "0.2.25",
