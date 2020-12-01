@@ -6,7 +6,9 @@
     "sourceMap": true,
     "outDir": "./dist",
     "moduleResolution": "node",
+    "declaration": false,
 
+    "composite": false,
     "removeComments": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -16,9 +18,13 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": false,
+    "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "rootDir": "src"
   },
   "exclude": ["node_modules"],
   "include": ["./src/**/*.tsx", "./src/**/*.ts"]
