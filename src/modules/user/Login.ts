@@ -1,4 +1,5 @@
 import { User } from "@db/entity";
+import { Errors } from "@tools/errors";
 import { Context } from "@tools/types";
 import * as argon2 from "argon2";
 import { Mutation, Arg, Ctx, Resolver } from "type-graphql";
@@ -10,16 +11,23 @@ export class LoginResolver {
   async login(
     @Arg("data") { email, password }: LoginInput,
     @Ctx() ctx: Context
-  ): Promise<User | null> {
+  ): Promise<User | void> {
     const user = await User.findOne({ where: { email } });
 
-    if (!user) return null;
+    if (!user) {
+      return Errors.NotFoundException("User not found");
+    }
+
     const isValid = await argon2.verify(user.password, password);
-    if (!isValid) return null;
-    if (!user.confirmed) return null;
+    if (!isValid) {
+      return Errors.UnauthorizedException("Authentication Error");
+    }
+
+    if (!user.confirmed) {
+      return Errors.UnauthorizedException("User is not confirmed");
+    }
 
     ctx.req.session!.userId = user.id;
-    console.log(ctx.req.session);
     return user;
   }
 }

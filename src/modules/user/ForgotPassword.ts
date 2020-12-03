@@ -1,4 +1,5 @@
 import { User } from "@db/entity";
+import { Errors } from "@tools/errors";
 import { forgotPasswordPrefix } from "@utils/constants";
 import { redis } from "@utils/main";
 import { sendEmail } from "@utils/user";
@@ -7,9 +8,12 @@ import { v4 as uuid } from "uuid";
 @Resolver()
 export class ForgotPasswordResolver {
   @Mutation(() => Boolean)
-  async forgotPassword(@Arg("email") email: string): Promise<Boolean> {
+  async forgotPassword(@Arg("email") email: string): Promise<Boolean | void> {
     const user = await User.findOne({ where: { email } });
-    if (!user) return true;
+    if (!user)
+      return Errors.NotFoundException(
+        `User with the email of ${email} was not found`
+      );
 
     const token = uuid();
     await redis.set(forgotPasswordPrefix + token, user.id, "ex", 60 * 60 * 24);

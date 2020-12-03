@@ -1,40 +1,36 @@
 import * as argon2 from "argon2";
-import { Query, Mutation, Arg, UseMiddleware, Resolver } from "type-graphql";
+import { Mutation, Arg, Resolver } from "type-graphql";
 import { RegisterInput } from "./input/RegisterInput";
 import { createConfirmationUrl, sendEmail } from "@utils/user";
-import { isAuth, logger } from "@tools/middlewares";
 import { User } from "@db/entity";
+import { Errors } from "@tools/errors";
 
 @Resolver()
 export class RegisterResolver {
-  @UseMiddleware(isAuth, logger)
-  @Query(() => String, { nullable: true })
-  async hello() {
-    return "Hello World!";
-  }
-
   @Mutation(() => User)
   async register(
     @Arg("data") { email, firstName, lastName, password }: RegisterInput
-  ): Promise<User | null> {
+  ): Promise<User | void> {
     if (await User.findOne({ email })) {
-      return null;
+      return Errors.ConflictException(
+        "User with the requested email already exists"
+      );
     }
+
+    const user = new User();
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.password = await argon2.hash(password);
+    user.email = email;
+
     try {
-      const user = new User();
-
-      user.firstName = firstName;
-      user.lastName = lastName;
-      user.password = await argon2.hash(password);
-      user.email = email;
-
       await user.save();
-
-      await sendEmail(email, await createConfirmationUrl(user.id));
-
-      return user;
     } catch (err) {
-      return null;
+      return Errors.InternalServerErrorException();
     }
+
+    await sendEmail(email, await createConfirmationUrl(user.id));
+
+    return user;
   }
 }

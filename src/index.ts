@@ -23,6 +23,7 @@ const main = async () => {
     schema,
     context: ({ req, res }: any) => ({ req, res }),
     uploads: false,
+    debug: !(process.env.NODE_ENV === "production"),
   });
 
   const app = Express();
