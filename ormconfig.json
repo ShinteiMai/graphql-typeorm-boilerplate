@@ -30,9 +30,10 @@
     "port": 5432,
     "username": "postgres",
     "password": "password",
-    "database": "typegraphql-boilerplate",
+    "database": "typegraphql-test-boilerplate",
     "synchronize": true,
     "logging": false,
+    "dropSchema": true,
     "entities": ["src/entity/*.*"]
   }
 ]

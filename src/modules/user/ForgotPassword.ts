@@ -17,7 +17,9 @@ export class ForgotPasswordResolver {
 
     await sendEmail(
       email,
-      `http://localhost:3000/users/change-password/${token}`
+      `${
+        process.env.ORIGIN || "http://localhost:3000"
+      }/users/change-password/${token}`
     );
 
     return true;
