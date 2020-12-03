@@ -7,9 +7,7 @@ import { confirmUserPrefix } from "../constants/confirmationPrefix";
 export class ConfirmUserResolver {
   @Mutation(() => Boolean)
   async confirmUser(@Arg("token") token: string): Promise<Boolean> {
-    console.log(token);
     const userId = await redis.get(confirmUserPrefix + token);
-    console.log(userId);
     if (!userId) return false;
 
     await User.update({ id: userId }, { confirmed: true });

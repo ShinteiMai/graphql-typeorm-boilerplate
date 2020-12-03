@@ -20,15 +20,15 @@ export class User extends BaseEntity {
   @Column("text")
   email: string;
 
-  @Field()
-  name(@Root() parent: User): string {
-    return `${parent.firstName} ${parent.lastName}`;
-  }
-
   @Column()
   password: string;
 
   @Field()
   @Column("bool", { default: false })
   confirmed: boolean;
+
+  @Field()
+  name(@Root() parent: User): string {
+    return `${parent.firstName} ${parent.lastName}`;
+  }
 }

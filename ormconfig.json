@@ -1,12 +1,38 @@
-{
-  "name": "default",
-  "type": "postgres",
-  "host": "localhost",
-  "port": 5432,
-  "username": "postgres",
-  "password": "",
-  "database": "typegraphql-boilerplate",
-  "synchronize": true,
-  "logging": true,
-  "entities": ["src/entity/*.*"]
-}
+[
+  {
+    "name": "development",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "password",
+    "database": "typegraphql-boilerplate",
+    "synchronize": true,
+    "logging": true,
+    "entities": ["src/entity/*.*"]
+  },
+  {
+    "name": "production",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "password",
+    "database": "typegraphql-boilerplate",
+    "synchronize": true,
+    "logging": false,
+    "entities": ["src/entity/*.*"]
+  },
+  {
+    "name": "test",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "password",
+    "database": "typegraphql-boilerplate",
+    "synchronize": true,
+    "logging": false,
+    "entities": ["src/entity/*.*"]
+  }
+]
