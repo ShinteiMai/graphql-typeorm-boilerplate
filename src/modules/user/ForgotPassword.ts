@@ -1,10 +1,9 @@
+import { User } from "@db/entity";
+import { forgotPasswordPrefix } from "@utils/constants";
+import { redis } from "@utils/main";
+import { sendEmail } from "@utils/user";
 import { Arg, Mutation, Resolver } from "type-graphql";
 import { v4 as uuid } from "uuid";
-import { redis } from "../../redis";
-import { sendEmail } from "../utils/sendEmail";
-import { User } from "../../entity/User";
-import { forgotPasswordPrefix } from "../constants/confirmationPrefix";
-
 @Resolver()
 export class ForgotPasswordResolver {
   @Mutation(() => Boolean)

@@ -7,10 +7,8 @@ import Express from "express";
 import connectRedis from "connect-redis";
 import session, { Store } from "express-session";
 import { ApolloServer } from "apollo-server-express";
-import { redis } from "./redis";
-import { createSchema } from "./utils/createSchema";
 import { graphqlUploadExpress } from "graphql-upload";
-import { setupTypeORMConnection } from "./utils/setupTypeORMConnection";
+import { createSchema, redis, setupTypeORMConnection } from "@utils/main";
 
 const main = async () => {
   /** 0. ENV & Database Setup */

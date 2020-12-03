@@ -1,9 +1,9 @@
 import * as faker from "faker";
 import * as argon2 from "argon2";
-import { User } from "../../../entity/User";
 import { Connection } from "typeorm";
-import { gqlCall } from "../../../test-utils/gqlCall";
-import { setupTypeORMConnection } from "../../../utils/setupTypeORMConnection";
+import { setupTypeORMConnection } from "@utils/main";
+import { gqlCall } from "@utils/test";
+import { User } from "@db/entity";
 
 let conn: Connection;
 
@@ -15,7 +15,7 @@ afterAll(async () => {
   await conn.close();
 });
 
-const registerMutation = `
+export const registerMutation = `
 mutation Register($data: RegisterInput!) {
   register(
     data: $data
@@ -31,13 +31,14 @@ mutation Register($data: RegisterInput!) {
 `;
 
 describe("Register", () => {
-  it("Create a user", async () => {
+  it("register an user", async () => {
     const data = {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
     };
+
     const call = await gqlCall({
       source: registerMutation,
       variableValues: {

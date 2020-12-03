@@ -1,7 +1,7 @@
 import { Length, IsEmail } from "class-validator";
 import { InputType } from "type-graphql";
 import { Field } from "type-graphql";
-import { PasswordMixin } from "../shared/passwordInput";
+import { PasswordMixin } from "./PasswordInput";
 
 @InputType()
 export class RegisterInput extends PasswordMixin(class {}) {

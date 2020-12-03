@@ -20,8 +20,10 @@
     "nodemailer": "^6.4.16",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.0",
     "type-graphql": "^1.1.1",
     "typeorm": "^0.2.29",
+    "typeorm-seeding": "^1.6.1",
     "uuid": "^8.3.1",
     "yup": "^0.31.1"
   },
@@ -44,10 +46,15 @@
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
     "ts-node-dev": "^1.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.2"
   },
   "scripts": {
-    "start": "NODE_ENV=development ts-node-dev --no-notify --respawn src/index.ts",
-    "test": "NODE_ENV=test jest --forceExit"
+    "start": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --no-notify --respawn src/index.ts",
+    "test": "NODE_ENV=test jest --forceExit",
+    "seed:config": "NODE_ENV=test ts-node ./node_modules/typeorm-seeding/dist/cli.js config --connection test",
+    "seed:run": "NODE_ENV=test ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --connection test",
+    "seed:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop --connection test",
+    "seed:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync --connection test"
   }
 }

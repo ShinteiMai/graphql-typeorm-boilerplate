@@ -1,11 +1,9 @@
 import * as argon2 from "argon2";
 import { Query, Mutation, Arg, UseMiddleware, Resolver } from "type-graphql";
-import { User } from "../../entity/User";
-import { RegisterInput } from "./register/RegisterInput";
-import { isAuth } from "../middlewares/isAuth";
-import { logger } from "../middlewares/logger";
-import { sendEmail } from "../utils/sendEmail";
-import { createConfirmationUrl } from "../utils/createConfirmationUrl";
+import { RegisterInput } from "./input/RegisterInput";
+import { createConfirmationUrl, sendEmail } from "@utils/user";
+import { isAuth, logger } from "@tools/middlewares";
+import { User } from "@db/entity";
 
 @Resolver()
 export class RegisterResolver {

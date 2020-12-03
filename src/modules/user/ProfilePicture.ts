@@ -1,8 +1,7 @@
 import { Resolver, Mutation, Arg } from "type-graphql";
 import { GraphQLUpload } from "graphql-upload";
 import { createWriteStream } from "fs";
-
-import { Upload } from "../../types/Upload";
+import { Upload } from "@tools/types";
 
 @Resolver()
 export class ProfilePictureResolver {

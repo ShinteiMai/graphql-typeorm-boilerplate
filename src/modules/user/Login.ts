@@ -1,8 +1,8 @@
+import { User } from "@db/entity";
+import { Context } from "@tools/types";
 import * as argon2 from "argon2";
 import { Mutation, Arg, Ctx, Resolver } from "type-graphql";
-import { User } from "../../entity/User";
-import { LoginInput } from "./login/LoginInput";
-import { Context } from "../../types/Context";
+import { LoginInput } from "./input/LoginInput";
 
 @Resolver()
 export class LoginResolver {

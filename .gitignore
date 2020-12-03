@@ -5,3 +5,4 @@ images/*
 # Env Files
 .env.development
 .env.production
+.env.test

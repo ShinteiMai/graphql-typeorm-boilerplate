@@ -1,9 +1,9 @@
 import * as argon2 from "argon2";
 import { Mutation, Arg, Resolver } from "type-graphql";
-import { User } from "../../entity/User";
-import { ChangePasswordInput } from "./changePassword/changePasswordInput";
-import { forgotPasswordPrefix } from "../constants/confirmationPrefix";
-import { redis } from "../../redis";
+import { redis } from "@utils/main";
+import { forgotPasswordPrefix } from "@utils/constants";
+import { ChangePasswordInput } from "./input/ChangePasswordInput";
+import { User } from "@db/entity";
 
 // import { Context } from "../../types/Context";
 
