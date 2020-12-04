@@ -21,7 +21,7 @@
     "database": "typegraphql-boilerplate",
     "synchronize": true,
     "logging": false,
-    "entities": ["src/database/entity/**./*.*"]
+    "entities": ["dist/database/entity/**./*.*"]
   },
   {
     "name": "test",

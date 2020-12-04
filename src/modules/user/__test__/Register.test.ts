@@ -39,4 +39,13 @@ describe("Register Resolver", () => {
     }
     expect(isPasswordMatching).toBeTruthy();
   }, 30000);
+
+  it("should be able to throw an error if an existing email already exists", async () => {
+    // const data = {
+    //   firstName: faker.name.firstName(),
+    //   lastName: faker.name.lastName(),
+    //   email: faker.internet.email(),
+    //   password: faker.internet.password(),
+    // };
+  });
 });

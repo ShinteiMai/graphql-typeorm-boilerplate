@@ -14,7 +14,7 @@ export const sendEmail = async (email: string, url: string) => {
   });
 
   const options = {
-    from: `"Fred Foo" <foo@example.com>`,
+    from: `"GraphQL Test Boilerplate" <foo@example.com>`,
     to: `${email} <${email}>`,
     subject: `"Hello!`,
     text: "Hello world?",
@@ -23,6 +23,10 @@ export const sendEmail = async (email: string, url: string) => {
 
   const info = await transporter.sendMail(options);
 
-  console.log("Message sent: ", info.messageId);
-  console.log("Preview url: ", nodemailer.getTestMessageUrl(info));
+  if (
+    process.env.NODE_ENV === "test" ||
+    process.env.NODE_ENV === "developoment"
+  ) {
+    console.log("Preview url: ", nodemailer.getTestMessageUrl(info));
+  }
 };

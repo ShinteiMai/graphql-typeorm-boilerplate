@@ -20,6 +20,7 @@
     "nodemailer": "^6.4.16",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
+    "tscpaths": "^0.0.9",
     "type-graphql": "^1.1.1",
     "typeorm": "^0.2.29",
     "typeorm-seeding": "^1.6.1",
@@ -47,9 +48,11 @@
     "typescript": "^4.1.2"
   },
   "scripts": {
-    "start": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --no-notify --respawn src/index.ts",
-    "db:setup": "NODE_ENV=test ts-node ./src/utils/test/setup/dbSetup.ts",
-    "test": "NODE_ENV=test npm run db:setup && jest --forceExit --detectOpenHandles",
+    "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --no-notify --respawn src/index.ts",
+    "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "start": "NODE_ENV=production node ./dist/index.js",
+    "test:db": "NODE_ENV=test ts-node ./src/utils/test/setup/dbSetup.ts",
+    "test": "NODE_ENV=test npm run test:db && jest --forceExit --detectOpenHandles",
     "seed:config": "NODE_ENV=test ts-node ./node_modules/typeorm-seeding/dist/cli.js config --connection test",
     "seed:run": "NODE_ENV=test ts-node ./node_modules/typeorm-seeding/dist/cli.js seed --connection test",
     "seed:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop --connection test",

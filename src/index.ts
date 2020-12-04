@@ -5,6 +5,7 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import Express from "express";
 import session from "express-session";
+import connectRedis from "connect-redis";
 import { ApolloServer } from "apollo-server-express";
 import { graphqlUploadExpress } from "graphql-upload";
 import { createSchema, redis, setupTypeORMConnection } from "@utils/main";
@@ -23,6 +24,7 @@ const main = async () => {
     context: ({ req, res }: any) => ({ req, res }),
     uploads: false,
     debug: !(process.env.NODE_ENV === "production"),
+    playground: true,
   });
 
   const app = Express();
@@ -43,7 +45,7 @@ const main = async () => {
   );
 
   /** 2. Session Setup w/ Redis */
-  const RedisStore = require("connect-redis")(session);
+  const RedisStore = connectRedis(session as any) as any;
   app.use(
     session({
       store: new RedisStore({
