@@ -11,4 +11,5 @@ module.exports = {
     "@modules/(.*)": "<rootDir>/src/modules/$1",
     "@tools/(.*)": "<rootDir>/src/tools/$1",
   },
+  setupFilesAfterEnv: ["<rootDir>/src/utils/test/setup/setupTests.ts"],
 };

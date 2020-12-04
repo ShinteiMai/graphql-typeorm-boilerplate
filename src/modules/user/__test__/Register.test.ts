@@ -1,36 +1,11 @@
 import * as faker from "faker";
 import * as argon2 from "argon2";
-import { Connection } from "typeorm";
-import { setupTypeORMConnection } from "@utils/main";
+
 import { gqlCall } from "@utils/test";
 import { User } from "@db/entity";
+import { registerMutation } from "./gql";
 
-let conn: Connection;
-
-beforeAll(async () => {
-  conn = await setupTypeORMConnection();
-});
-
-afterAll(async () => {
-  await conn.close();
-});
-
-export const registerMutation = `
-mutation Register($data: RegisterInput!) {
-  register(
-    data: $data
-  ) {
-    id
-    firstName
-    lastName
-    email
-    name
-    confirmed
-  }
-}
-`;
-
-describe("Register", () => {
+describe("Register Resolver", () => {
   it("register an user", async () => {
     const data = {
       firstName: faker.name.firstName(),
