@@ -4,8 +4,7 @@ import * as path from "path";
 import * as dotenv from "dotenv";
 import cors from "cors";
 import Express from "express";
-import connectRedis from "connect-redis";
-import session, { Store } from "express-session";
+import session from "express-session";
 import { ApolloServer } from "apollo-server-express";
 import { graphqlUploadExpress } from "graphql-upload";
 import { createSchema, redis, setupTypeORMConnection } from "@utils/main";
@@ -43,28 +42,27 @@ const main = async () => {
     })
   );
 
-  apolloServer.applyMiddleware({ app, cors: false });
-
   /** 2. Session Setup w/ Redis */
-  //@ts-ignore
-  const RedisStore = connectRedis(session);
+  const RedisStore = require("connect-redis")(session);
   app.use(
     session({
       store: new RedisStore({
-        client: redis as any,
-      }) as Store,
-      name: process.env.SESSION_NAME,
+        client: redis,
+      }),
+      name: process.env.SESSION_NAME || "cookie",
       secret: process.env.SESSION_SECRET || "secret",
       resave: false,
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60 * 24 * Number(process.env.COOKIE_MAX_AGE),
+        secure: !!(process.env.NODE_ENV === "production"),
+        maxAge: 1000 * 60 * 60 * 24 * Number(process.env.COOKIE_MAX_AGE || 365),
       },
     })
   );
 
+  /** 3. Running the Apollo Server */
+  apolloServer.applyMiddleware({ app, cors: false });
   app.listen(process.env.PORT || 8080, () => {
     console.log(
       `🚀 GraphQL API started on http://localhost:${
@@ -74,4 +72,4 @@ const main = async () => {
   });
 };
 
-main();
+main().catch((err) => console.error(err));

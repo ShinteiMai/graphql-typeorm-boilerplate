@@ -2,12 +2,10 @@ import * as argon2 from "argon2";
 import { Mutation, Arg, Resolver, UseMiddleware } from "type-graphql";
 import { redis } from "@utils/main";
 import { forgotPasswordPrefix } from "@utils/constants";
-import { ChangePasswordInput } from "./input/ChangePasswordInput";
+import { ChangePasswordInput } from "../input/ChangePasswordInput";
 import { User } from "@db/entity";
 import { isAuth } from "@tools/middlewares";
 import { Errors } from "@tools/errors";
-
-// import { Context } from "../../types/Context";
 
 @Resolver()
 export class ChangePasswordResolver {

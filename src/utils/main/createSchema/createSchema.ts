@@ -1,13 +1,30 @@
+import {
+  ChangePasswordResolver,
+  ConfirmUserResolver,
+  ForgotPasswordResolver,
+  LoginResolver,
+  LogoutResolver,
+  MeResolver,
+  ProfilePictureResolver,
+  RegisterResolver,
+} from "@modules/user";
 import { buildSchema } from "type-graphql";
-import * as path from "path";
 
 /**
  * This will build all the GraphQL Schema based on all resolvers under the src/modules/* folder
  */
 export const createSchema = () => {
-  const modulesPath = path.join(__dirname + "/../../../modules/*/*.ts");
   return buildSchema({
-    resolvers: [modulesPath],
+    resolvers: [
+      LoginResolver,
+      RegisterResolver,
+      MeResolver,
+      ConfirmUserResolver,
+      ForgotPasswordResolver,
+      ChangePasswordResolver,
+      ProfilePictureResolver,
+      LogoutResolver,
+    ],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
     },

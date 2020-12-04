@@ -1,9 +1,9 @@
 import * as argon2 from "argon2";
 import { Mutation, Arg, Resolver } from "type-graphql";
-import { RegisterInput } from "./input/RegisterInput";
 import { createConfirmationUrl, sendEmail } from "@utils/user";
 import { User } from "@db/entity";
 import { Errors } from "@tools/errors";
+import { RegisterInput } from "../input/RegisterInput";
 
 @Resolver()
 export class RegisterResolver {
