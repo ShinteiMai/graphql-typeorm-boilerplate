@@ -49,8 +49,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --no-notify --respawn src/index.ts",
-    "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
-    "start": "NODE_ENV=production node ./dist/index.js",
+    "start": "NODE_ENV=production ts-node -r tsconfig-paths/register --transpile-only src/index.ts",
     "test:db": "NODE_ENV=test ts-node ./src/utils/test/setup/dbSetup.ts",
     "test": "NODE_ENV=test npm run test:db && jest --forceExit --detectOpenHandles",
     "seed:config": "NODE_ENV=test ts-node ./node_modules/typeorm-seeding/dist/cli.js config --connection test",

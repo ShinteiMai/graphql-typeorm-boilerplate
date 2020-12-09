@@ -28,21 +28,6 @@ const main = async () => {
   });
 
   const app = Express();
-  app.use(
-    cors({
-      credentials: true,
-      /** Enter your client's origin here */
-      origin: process.env.ORIGIN || `http://localhost:3000`,
-    })
-  );
-
-  app.use(
-    "/graphql",
-    graphqlUploadExpress({
-      maxFileSize: Number(process.env.MAX_FILE_SIZE) || 10000000,
-      maxFiles: Number(process.env.MAX_FILES) || 10,
-    })
-  );
 
   /** 2. Session Setup w/ Redis */
   const RedisStore = connectRedis(session as any) as any;
@@ -63,13 +48,29 @@ const main = async () => {
     })
   );
 
+  app.use(
+    "/graphql",
+    graphqlUploadExpress({
+      maxFileSize: Number(process.env.MAX_FILE_SIZE) || 10000000,
+      maxFiles: Number(process.env.MAX_FILES) || 10,
+    })
+  );
+
+  app.use(
+    cors({
+      credentials: true,
+      /** Enter your client's origin here */
+      origin: process.env.ORIGIN || `http://localhost:3000`,
+    })
+  );
+
   /** 3. Running the Apollo Server */
-  apolloServer.applyMiddleware({ app, cors: false });
+  apolloServer.applyMiddleware({ app, cors: false, path: "/graphql" });
   app.listen(process.env.PORT || 8080, () => {
     console.log(
       `🚀 GraphQL API started on http://localhost:${
         process.env.PORT || 8080
-      }/graphql`
+      }`
     );
   });
 };

@@ -18,10 +18,10 @@
     "port": 5432,
     "username": "postgres",
     "password": "password",
-    "database": "typegraphql-boilerplate",
+    "database": "typegraphql-prod",
     "synchronize": true,
-    "logging": false,
-    "entities": ["dist/database/entity/**./*.*"]
+    "logging": true,
+    "entities": ["src/database/entity/**/*.*"]
   },
   {
     "name": "test",
