@@ -14,13 +14,13 @@
   {
     "name": "production",
     "type": "postgres",
-    "host": "localhost",
+    "host": "database",
     "port": 5432,
     "username": "postgres",
     "password": "password",
     "database": "typegraphql-prod",
     "synchronize": true,
-    "logging": true,
+    "logging": false,
     "entities": ["src/database/entity/**/*.*"]
   },
   {

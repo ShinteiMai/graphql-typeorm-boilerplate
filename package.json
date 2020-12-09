@@ -50,6 +50,7 @@
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --no-notify --respawn src/index.ts",
     "start": "NODE_ENV=production ts-node -r tsconfig-paths/register --transpile-only src/index.ts",
+    "deploy": "docker-compose --env-file .env.production up --build -d --force-recreate --no-deps",
     "test:db": "NODE_ENV=test ts-node ./src/utils/test/setup/dbSetup.ts",
     "test": "NODE_ENV=test npm run test:db && jest --forceExit --detectOpenHandles",
     "seed:config": "NODE_ENV=test ts-node ./node_modules/typeorm-seeding/dist/cli.js config --connection test",
