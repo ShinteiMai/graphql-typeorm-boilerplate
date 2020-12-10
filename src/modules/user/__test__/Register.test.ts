@@ -33,7 +33,7 @@ describe("Register Resolver", () => {
     expect(user?.confirmed).toBeFalsy();
     expect(user?.firstName).toBe(data.firstName);
     expect(user?.lastName).toBe(data.lastName);
-    let isPasswordMatching: boolean = false;
+    let isPasswordMatching = false;
     if (user?.password) {
       isPasswordMatching = await argon2.verify(user.password, data.password);
     }
