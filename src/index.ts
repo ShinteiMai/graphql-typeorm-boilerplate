@@ -17,6 +17,7 @@ const main = async () => {
   });
   await setupTypeORMConnection();
 
+
   /** 1. Apollo Server Setup */
   const schema = await createSchema();
   const apolloServer = new ApolloServer({
@@ -70,7 +71,7 @@ const main = async () => {
     console.log(
       `🚀 GraphQL API started on http://localhost:${
         process.env.PORT || 8080
-      }`
+      }/graphql`
     );
   });
 };
